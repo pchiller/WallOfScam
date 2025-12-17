@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall of Scam 🎭</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .carousel-container {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .carousel-wrapper {
+            overflow: hidden;
+            padding: 4rem 0;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.5s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            min-width: 320px;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.5s ease;
+            opacity: 0.6;
+            transform: scale(0.85);
+        }
+
+        .card.active {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .card-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border: 4px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .card:not(.active) .card-image {
+            width: 100px;
+            height: 100px;
+            font-size: 3rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+
+        .card-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .card-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0 auto;
+            display: block;
+            width: fit-content;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-button.prev {
+            left: 0;
+        }
+
+        .nav-button.next {
+            right: 0;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                min-width: 280px;
+            }
+
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 Wall of Scam 🎭</h1>
+        <p class="subtitle">The Greatest Scams We All Fall For</p>
+
+        <div class="carousel-container">
+            <button class="nav-button prev" onclick="previousSlide()">‹</button>
+            <button class="nav-button next" onclick="nextSlide()">›</button>
+
+            <div class="carousel-wrapper">
+                <div class="carousel" id="carousel">
+                    <!-- Cards will be generated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="dots" id="dots">
+                <!-- Dots will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let scams = [
+            {
+                "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=sleep",
+                "title": "5 More Minutes",
+                "description": "That moment when 5 minutes turns into 30 and you're late for everything.",
+                "tag": "Daily Scam"
+            },
+            {
+                "image": "./images/diet-avatar.jpg",
+                "title": "Diet Starting Monday",
+                "description": "The eternal promise that never quite happens because Tuesday looks busy too.",
+                "tag": "Health Scam"
+            }
+        ];
+        
+        let currentIndex = 0;
+
+        function init() {
+            generateCards();
+            updateCarousel();
+        }
+
+        function generateCards() {
+            const carousel = document.getElementById('carousel');
+            const dots = document.getElementById('dots');
+            
+            scams.forEach((scam, index) => {
+                // Create card
+                const card = document.createElement('div');
+                card.className = 'card';
+                if (index === currentIndex) card.classList.add('active');
+                
+                const imageContent = scam.image 
+                    ? `<img src="${scam.image}" alt="${scam.title}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` 
+                    : scam.emoji;
+                
+                card.innerHTML = `
+                    <div class="card-image">${imageContent}</div>
+                    <h3 class="card-title">${scam.title}</h3>
+                    <p class="card-description">${scam.description}</p>
+                    <span class="card-tag">${scam.tag}</span>
+                `;
+                
+                carousel.appendChild(card);
+
+                // Create dot
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === currentIndex) dot.classList.add('active');
+                dot.onclick = () => goToSlide(index);
+                dots.appendChild(dot);
+            });
+        }
+
+        function updateCarousel() {
+            const cards = document.querySelectorAll('.card');
+            const dots = document.querySelectorAll('.dot');
+            const carousel = document.getElementById('carousel');
+            
+            cards.forEach((card, index) => {
+                card.classList.remove('active');
+            });
+            
+            // Mark the current index card as active
+            if (cards[currentIndex]) {
+                cards[currentIndex].classList.add('active');
+            }
+
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                }
+            });
+
+            const containerWidth = carousel.parentElement.offsetWidth;
+            const cardWidth = 320 + 32; // card width + gap
+            const totalWidth = scams.length * cardWidth;
+            const offset = (containerWidth / 2) - (currentIndex * cardWidth) - (cardWidth / 2);
+            
+            carousel.style.transform = `translateX(${offset}px)`;
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % scams.length;
+            updateCarousel();
+        }
+
+        function previousSlide() {
+            currentIndex = (currentIndex - 1 + scams.length) % scams.length;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') previousSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // Auto-play (optional)
+        setInterval(nextSlide, 5000);
+
+        init();
+
+        // Update on window resize
+        window.addEventListener('resize', updateCarousel);
+    </script>
+</body>
+</html>
